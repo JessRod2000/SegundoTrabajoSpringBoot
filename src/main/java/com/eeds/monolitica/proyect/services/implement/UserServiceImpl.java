@@ -50,4 +50,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDto(user);
     }
 
+    @Override
+    public void delete(Long userid) {
+        //userDetailRepository.deleteById();
+        userRepository.deleteById(userid);
+    }
+
 }

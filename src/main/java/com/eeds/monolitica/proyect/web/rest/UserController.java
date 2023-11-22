@@ -32,4 +32,9 @@ public class UserController {
         UserDTO userDB = userService.save(userDTO);
         return ResponseEntity.created(new URI("/v1/users/"+userDB.getId())).body(userDB);
     }
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> delete(@PathVariable final Long userId){
+        userService.delete(userId);
+        return ResponseEntity.noContent().build();
+    }
 }
