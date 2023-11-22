@@ -12,13 +12,12 @@ public class UserRol {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_detail_sequence")
     private Integer id;
     private Boolean active;
-    @Column(name = "created_At", columnDefinition = "TIMESTAMP")
-
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rol_id")
     private Rol rol;
 

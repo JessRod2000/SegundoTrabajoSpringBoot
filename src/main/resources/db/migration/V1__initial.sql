@@ -1,5 +1,5 @@
 -- create user table
-create table "user" (
+create table users (
                         id bigint primary key not null,
                         user_name varchar(150) not null,
                         password varchar(150) not null,
@@ -22,7 +22,7 @@ create table user_detail (
 create sequence user_detail_sequence as integer increment 1;
 
 alter table user_detail add constraint FK_User_Detail_RefUser foreign key (user_id)
-    references "user"(id) on delete restrict on update restrict;
+    references users(id) on delete restrict on update restrict;
 
 ----------------- create rol table
 create table rol (
@@ -44,7 +44,7 @@ create table user_rol (
 create sequence user_rol_sequence as integer increment 1;
 
 alter table user_rol add constraint FK_User_Rol_RefUser foreign key (user_id)
-    references "user"(id) on delete restrict on update restrict;
+    references users(id) on delete restrict on update restrict;
 
 alter table user_rol add constraint FK_User_Rol_RefRol foreign key (rol_id)
     references rol(id) on delete restrict on update restrict;

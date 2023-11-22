@@ -34,14 +34,9 @@ public class RolServiceImpl implements RolService {
 
     @Override
     public Rol updateRol(Integer id, Rol rol) {
-        Optional<Rol> rolDB = rolRepository.findById(id);
-        if (rolDB.isPresent()) {
-            Rol existingRol = rolDB.get();
-            existingRol.setName(rol.getName());
-            return rolRepository.save(existingRol);
-        } else {
-            throw new NoSuchElementException("No se encontró el rol con ID: " + id);
-        }
+        Rol rolDB = rolRepository.findById(id).orElseThrow(()->new NoSuchElementException("No se encontró el rol con ID: " + id));
+        rolDB.setName(rol.getName());
+        return rolRepository.save(rolDB);
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.eeds.monolitica.proyect.services.mapper;
 
 import com.eeds.monolitica.proyect.domain.entities.User;
+import com.eeds.monolitica.proyect.domain.entities.UserDetail;
 import com.eeds.monolitica.proyect.dto.UserDTO;
+import com.eeds.monolitica.proyect.dto.UserDetailDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper implements CustomMapper<UserDTO, User>{
 
     @Override
@@ -25,5 +29,21 @@ public class UserMapper implements CustomMapper<UserDTO, User>{
         user.setCreatedAt(userDTO.getCreatedAt());
 
         return user;
+    }
+    public UserDetailDTO toDtoDetailed(User user){
+        UserDetailDTO userDTO=new UserDetailDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUserName(user.getUserName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setCreatedAt(user.getCreatedAt());
+
+        UserDetail userDetail = user.getUserDetail();
+        if (userDetail!=null){
+            userDTO.setFirstName(userDetail.getFirstName());
+            userDTO.setLastName(userDetail.getLastName());
+            userDTO.setAge(userDetail.getAge());
+            userDTO.setBirthDay(userDetail.getBirthDay());
+        }
+        return userDTO;
     }
 }
