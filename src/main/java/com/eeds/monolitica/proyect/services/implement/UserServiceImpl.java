@@ -47,13 +47,11 @@ public class UserServiceImpl implements UserService {
         if (userDTO.getUserDetail()!=null) {
             userDetailRepository.save(new UserDetail(userDTO.getUserDetail().getFirstName(),userDTO.getUserDetail().getLastName(),userDTO.getUserDetail().getAge(),userDTO.getUserDetail().getBirthDay(),user));
         }
-        //userDetailRepository.save(new UserDetail(userDTO.getUserName(),userDTO.get))
         return userMapper.toDto(user);
     }
 
     @Override
     public void delete(Long userid) {
-        //userDetailRepository.deleteById();
         userRepository.deleteById(userid);
     }
 
