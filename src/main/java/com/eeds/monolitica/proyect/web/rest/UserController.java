@@ -2,13 +2,13 @@ package com.eeds.monolitica.proyect.web.rest;
 
 import com.eeds.monolitica.proyect.domain.entities.User;
 import com.eeds.monolitica.proyect.dto.UserDTO;
+import com.eeds.monolitica.proyect.dto.UserNewDTO;
 import com.eeds.monolitica.proyect.services.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -26,5 +26,10 @@ public class UserController {
         }else{
             return ResponseEntity.ok().body(userService.listAllUsers());
         }
+    }
+    @PostMapping
+    public ResponseEntity<UserDTO> create(@RequestBody final UserNewDTO userDTO) throws URISyntaxException{
+        UserDTO userDB = userService.save(userDTO);
+        return ResponseEntity.created(new URI("/v1/users/"+userDB.getId())).body(userDB);
     }
 }

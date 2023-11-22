@@ -4,6 +4,7 @@ import com.eeds.monolitica.proyect.domain.entities.User;
 import com.eeds.monolitica.proyect.domain.entities.UserDetail;
 import com.eeds.monolitica.proyect.dto.UserDTO;
 import com.eeds.monolitica.proyect.dto.UserDetailDTO;
+import com.eeds.monolitica.proyect.dto.UserNewDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,6 +31,17 @@ public class UserMapper implements CustomMapper<UserDTO, User>{
 
         return user;
     }
+    public User toEntityCreate(UserNewDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setUserName(userDTO.getUserName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setCreatedAt(userDTO.getCreatedAt());
+
+        return user;
+    }
+
     public UserDetailDTO toDtoDetailed(User user){
         UserDetailDTO userDTO=new UserDetailDTO();
         userDTO.setId(user.getId());

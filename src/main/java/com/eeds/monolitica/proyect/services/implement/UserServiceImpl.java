@@ -1,8 +1,11 @@
 package com.eeds.monolitica.proyect.services.implement;
 
 import com.eeds.monolitica.proyect.domain.entities.User;
+import com.eeds.monolitica.proyect.domain.entities.UserDetail;
 import com.eeds.monolitica.proyect.dto.UserDTO;
 import com.eeds.monolitica.proyect.dto.UserDetailDTO;
+import com.eeds.monolitica.proyect.dto.UserNewDTO;
+import com.eeds.monolitica.proyect.repositories.UserDetailRepository;
 import com.eeds.monolitica.proyect.repositories.UserRepository;
 import com.eeds.monolitica.proyect.services.UserService;
 import com.eeds.monolitica.proyect.services.mapper.UserMapper;
@@ -15,10 +18,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final UserDetailRepository userDetailRepository;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, UserDetailRepository userDetailRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.userDetailRepository = userDetailRepository;
     }
     @Override
     public List<UserDTO> listAllUsers() {
@@ -34,4 +39,12 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(userMapper::toDtoDetailed).collect(Collectors.toList());
     }
+
+    @Override
+    public UserDTO save(UserNewDTO userDTO) {
+        User user = userRepository.save(userMapper.toEntityCreate(userDTO));
+        //userDetailRepository.save(new UserDetail(userDTO.getUserName(),userDTO.get))
+        return userMapper.toDto(user);
+    }
+
 }
