@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -36,5 +37,18 @@ public class UserController {
     public ResponseEntity<Void> delete(@PathVariable final Long userId){
         userService.delete(userId);
         return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDTO> editUser(@RequestBody final UserNewDTO userDto,
+                                            @PathVariable final Long userId) throws URISyntaxException{
+        if (userDto.getId() == null) {
+            throw new IllegalArgumentException("Invalid course id, null value");
+        }
+        if (!Objects.equals(userDto.getId(), userId)) {
+            throw new IllegalArgumentException("Invalid id: "+userId);
+        }
+        return ResponseEntity
+                .ok()
+                .body(this.userService.updateRol(userId,userDto));
     }
 }

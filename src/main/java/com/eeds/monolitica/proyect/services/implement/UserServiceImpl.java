@@ -12,6 +12,7 @@ import com.eeds.monolitica.proyect.services.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,6 +55,19 @@ public class UserServiceImpl implements UserService {
     public void delete(Long userid) {
         //userDetailRepository.deleteById();
         userRepository.deleteById(userid);
+    }
+
+    @Override
+    public UserDTO updateRol(Long id, UserNewDTO userDTO) {
+        User userDB = userRepository.findById(id).orElseThrow(()->new NoSuchElementException("No se encontró el rol con ID: " + id));
+        userDB.setUserName(userDTO.getUserName());
+        userDB.setPassword(userDTO.getPassword());
+        userDB.setEmail(userDTO.getEmail());
+        userRepository.save(userDB);
+        if (userDTO.getUserDetail()!=null) {
+            userDetailRepository.save(new UserDetail(userDTO.getUserDetail().getFirstName(),userDTO.getUserDetail().getLastName(),userDTO.getUserDetail().getAge(),userDTO.getUserDetail().getBirthDay(),userDB));
+        }
+        return userMapper.toDto(userDB);
     }
 
 }
