@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO save(UserNewDTO userDTO) {
         User user = userRepository.save(userMapper.toEntityCreate(userDTO));
+        if (userDTO.getUserDetail()!=null) {
+            userDetailRepository.save(new UserDetail(userDTO.getUserDetail().getFirstName(),userDTO.getUserDetail().getLastName(),userDTO.getUserDetail().getAge(),userDTO.getUserDetail().getBirthDay(),user));
+        }
         //userDetailRepository.save(new UserDetail(userDTO.getUserName(),userDTO.get))
         return userMapper.toDto(user);
     }

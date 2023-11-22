@@ -1,5 +1,6 @@
 package com.eeds.monolitica.proyect.dto;
 
+import com.eeds.monolitica.proyect.domain.entities.UserDetail;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,4 +15,5 @@ public class UserNewDTO {
     private String password;
     private String email;
     private LocalDateTime createdAt;
+    private UserDetail userDetail;
 }
