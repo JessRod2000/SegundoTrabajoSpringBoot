@@ -10,4 +10,5 @@ public interface UserRolService {
     //List<UserRolDetailDTO> listUsersRolesDetailed();
     int save(UserRolDTO userRolDTO);
     int updateStatusRol(Long userId, Integer rolId, UserRolUpdateDTO userRolUpdateDTO);
+    void assignroles(Long userId, List<Integer> roles);
 }

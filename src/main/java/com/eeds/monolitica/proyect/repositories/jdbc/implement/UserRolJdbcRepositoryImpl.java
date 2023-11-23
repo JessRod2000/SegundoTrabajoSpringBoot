@@ -45,4 +45,15 @@ public class UserRolJdbcRepositoryImpl implements UserRolJdbcRepository {
                 """;
         return jdbcTemplate.update(sql,userRolUpdateDTO.getActive(),userId,rolId);
     }
+
+    @Override
+    public void assignroles(Long userId, List<Integer> roles) {
+        var sql= """
+                INSERT INTO user_rol (id,active,created_at, user_id,rol_id)
+                VALUES (nextval('user_rol_sequence'),true,CURRENT_TIMESTAMP,?,?);
+                """;
+        for (Integer rolId:roles) {
+            jdbcTemplate.update(sql,userId,rolId);
+        }
+    }
 }

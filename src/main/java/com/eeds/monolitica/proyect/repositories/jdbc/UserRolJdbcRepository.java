@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserRolJdbcRepository {
     List<UserRolDTO> listUsersRoles();
     int save(UserRolDTO userRolDTO);
-
     int updateStatus(Long userId, Integer rolId, UserRolUpdateDTO userRolUpdateDTO);
+    void assignroles(Long userId, List<Integer> roles);
 }

@@ -31,4 +31,9 @@ public class UserRolServiceImpl implements UserRolService {
         return userRolJdbcRepository.updateStatus(userId,rolId,userRolUpdateDTO);
     }
 
+    @Override
+    public void assignroles(Long userId, List<Integer> roles) {
+        userRolJdbcRepository.assignroles(userId, roles);
+    }
+
 }

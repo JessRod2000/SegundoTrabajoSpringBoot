@@ -34,4 +34,10 @@ public class UserRolController {
         userRolService.updateStatusRol(userId,rolId,userRolUpdateDTO);
         return ResponseEntity.created(null).build();
     }
+    @PostMapping("/{userId}/assign-roles")
+    public ResponseEntity<Void> assignRolesToUser(@PathVariable final Long userId,
+                                                  @RequestBody List<Integer> roles){
+        userRolService.assignroles(userId, roles);
+        return ResponseEntity.created(null).build();
+    }
 }
