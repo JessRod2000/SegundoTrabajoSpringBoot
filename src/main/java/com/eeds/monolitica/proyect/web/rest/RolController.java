@@ -3,6 +3,7 @@ package com.eeds.monolitica.proyect.web.rest;
 import com.eeds.monolitica.proyect.domain.entities.Rol;
 import com.eeds.monolitica.proyect.services.RolService;
 import com.eeds.monolitica.proyect.web.exception.RolNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class RolController {
                 .body(rolService.getRolById(id).get());
     }
     @PostMapping
-    public ResponseEntity<Rol> saveRol(@RequestBody final Rol rol) throws URISyntaxException {
+    public ResponseEntity<Rol> saveRol(@Valid @RequestBody final Rol rol) throws URISyntaxException {
         Rol rolDB = rolService.saveRol(rol);
         return ResponseEntity.created(new URI("/v1/roles/" + rolDB.getId()))
                 .body(rolDB);

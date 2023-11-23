@@ -1,6 +1,8 @@
 package com.eeds.monolitica.proyect.domain.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "rol")
@@ -9,6 +11,9 @@ public class Rol {
     @SequenceGenerator(name = "rol_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rol_sequence")
     private Integer id;
+
+    @Size(min = 3, max = 100)
+    @NotBlank(message = "Por favor addicionar el nombre de rol")
     private String name;
 
     public Rol(String name) {
