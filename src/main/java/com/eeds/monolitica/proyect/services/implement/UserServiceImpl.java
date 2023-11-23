@@ -9,13 +9,16 @@ import com.eeds.monolitica.proyect.repositories.data.UserDetailRepository;
 import com.eeds.monolitica.proyect.repositories.data.UserRepository;
 import com.eeds.monolitica.proyect.services.UserService;
 import com.eeds.monolitica.proyect.services.mapper.UserMapper;
+import lombok.ToString;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService {
         this.userDetailRepository = userDetailRepository;
     }
     @Override
+    @Transactional(readOnly = true)
     public List<UserDTO> listAllUsers() {
         return userRepository.findAll()
                 .stream()
@@ -35,6 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDetailDTO> listAllUsersDetailed() {
         return userRepository.findAll()
                 .stream()
