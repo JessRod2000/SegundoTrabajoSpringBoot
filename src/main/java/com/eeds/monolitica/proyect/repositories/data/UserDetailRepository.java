@@ -1,4 +1,4 @@
-package com.eeds.monolitica.proyect.repositories;
+package com.eeds.monolitica.proyect.repositories.data;
 
 import com.eeds.monolitica.proyect.domain.entities.UserDetail;
 import org.springframework.data.jpa.repository.JpaRepository;

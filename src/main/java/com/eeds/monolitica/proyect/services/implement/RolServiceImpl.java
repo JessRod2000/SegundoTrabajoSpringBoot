@@ -1,7 +1,7 @@
 package com.eeds.monolitica.proyect.services.implement;
 
 import com.eeds.monolitica.proyect.domain.entities.Rol;
-import com.eeds.monolitica.proyect.repositories.RolRepository;
+import com.eeds.monolitica.proyect.repositories.data.RolRepository;
 import com.eeds.monolitica.proyect.services.RolService;
 import org.springframework.stereotype.Service;
 

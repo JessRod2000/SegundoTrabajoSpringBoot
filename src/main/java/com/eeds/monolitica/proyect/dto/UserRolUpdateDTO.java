@@ -6,14 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRolDTO {
-    private Integer id;
+public class UserRolUpdateDTO {
     private Boolean active;
-    private Long userId;
-    private Integer rolId;
 }
