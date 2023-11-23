@@ -1,8 +1,6 @@
 package com.eeds.monolitica.proyect.domain.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-//import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Table(name = "rol")
