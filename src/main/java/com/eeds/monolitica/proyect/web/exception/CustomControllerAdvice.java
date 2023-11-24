@@ -1,6 +1,5 @@
 package com.eeds.monolitica.proyect.web.exception;
 
-import com.eeds.monolitica.proyect.web.exception.RolNotFoundException;
 import com.eeds.monolitica.proyect.web.exception.dto.ErrorMessageDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,11 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class RolControllerAdvice extends ResponseEntityExceptionHandler {
+public class CustomControllerAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(RolNotFoundException.class)
+    @ExceptionHandler(CustomNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorMessageDTO> handleRolNotFoundExcepion(RolNotFoundException e){
+    public ResponseEntity<ErrorMessageDTO> handleRolNotFoundExcepion(CustomNotFoundException e){
         ErrorMessageDTO error = new ErrorMessageDTO(HttpStatus.NOT_FOUND, e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }

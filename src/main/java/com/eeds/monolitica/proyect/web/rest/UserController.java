@@ -1,15 +1,20 @@
 package com.eeds.monolitica.proyect.web.rest;
 
-import com.eeds.monolitica.proyect.domain.entities.User;
 import com.eeds.monolitica.proyect.dto.UserDTO;
 import com.eeds.monolitica.proyect.dto.UserNewDTO;
 import com.eeds.monolitica.proyect.services.UserService;
+import com.eeds.monolitica.proyect.web.exception.CustomNotFoundException;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -28,8 +33,13 @@ public class UserController {
             return ResponseEntity.ok().body(userService.listAllUsers());
         }
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDTO> getRolById(@PathVariable final Long userId) throws CustomNotFoundException {
+        return ResponseEntity.ok()
+                .body(userService.getUserById(userId).get());
+    }
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody final UserNewDTO userDTO) throws URISyntaxException{
+    public ResponseEntity<UserDTO> create(@Valid @RequestBody final UserNewDTO userDTO) throws URISyntaxException{
         UserDTO userDB = userService.save(userDTO);
         return ResponseEntity.created(new URI("/v1/users/"+userDB.getId())).body(userDB);
     }
@@ -40,7 +50,7 @@ public class UserController {
     }
     @PutMapping("/{userId}")
     public ResponseEntity<UserDTO> editUser(@RequestBody final UserNewDTO userDto,
-                                            @PathVariable final Long userId) throws URISyntaxException{
+                                            @PathVariable final Long userId) throws CustomNotFoundException{
         if (userDto.getId() == null) {
             throw new IllegalArgumentException("Invalid course id, null value");
         }
@@ -49,6 +59,6 @@ public class UserController {
         }
         return ResponseEntity
                 .ok()
-                .body(this.userService.updateRol(userId,userDto));
+                .body(this.userService.updateUser(userId,userDto));
     }
 }

@@ -1,5 +1,6 @@
 package com.eeds.monolitica.proyect.services.implement;
 
+import com.eeds.monolitica.proyect.domain.entities.Rol;
 import com.eeds.monolitica.proyect.domain.entities.User;
 import com.eeds.monolitica.proyect.domain.entities.UserDetail;
 import com.eeds.monolitica.proyect.dto.UserDTO;
@@ -9,12 +10,14 @@ import com.eeds.monolitica.proyect.repositories.data.UserDetailRepository;
 import com.eeds.monolitica.proyect.repositories.data.UserRepository;
 import com.eeds.monolitica.proyect.services.UserService;
 import com.eeds.monolitica.proyect.services.mapper.UserMapper;
+import com.eeds.monolitica.proyect.web.exception.CustomNotFoundException;
 import lombok.ToString;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +64,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateRol(Long id, UserNewDTO userDTO) {
+    public UserDTO updateUser(Long id, UserNewDTO userDTO) {
         User userDB = userRepository.findById(id).orElseThrow(()->new NoSuchElementException("No se encontró el rol con ID: " + id));
         userDB.setUserName(userDTO.getUserName());
         userDB.setPassword(userDTO.getPassword());
@@ -71,6 +74,16 @@ public class UserServiceImpl implements UserService {
             userDetailRepository.save(new UserDetail(userDTO.getUserDetail().getFirstName(),userDTO.getUserDetail().getLastName(),userDTO.getUserDetail().getAge(),userDTO.getUserDetail().getBirthDay(),userDB));
         }
         return userMapper.toDto(userDB);
+    }
+
+    @Override
+    public Optional<UserDTO> getUserById(Long userId) throws CustomNotFoundException {
+        Optional<User> userDB = userRepository.findById(userId);
+        if(!userDB.isPresent()){
+            throw new CustomNotFoundException("El USER con el ID :"+userId+" NO EXISTE");
+        }
+
+        return userRepository.findById(userId).map(userMapper::toDto);
     }
 
 }

@@ -1,6 +1,10 @@
 package com.eeds.monolitica.proyect.domain.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -13,8 +17,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
     @Column(name = "user_name")
+    @Size(min = 3, max = 100)
+    @NotBlank(message = "El campo userName no puede estar vacio")
     private String userName;
+    //@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", message = "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.")
+    @NotBlank(message = "El campo password no puede estar vacio")
     private String password;
+    @Email(message = "El correo electronico tiene un formato invalido")
     private String email;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;

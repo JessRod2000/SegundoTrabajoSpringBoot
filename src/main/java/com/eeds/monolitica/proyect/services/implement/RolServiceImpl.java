@@ -3,7 +3,7 @@ package com.eeds.monolitica.proyect.services.implement;
 import com.eeds.monolitica.proyect.domain.entities.Rol;
 import com.eeds.monolitica.proyect.repositories.data.RolRepository;
 import com.eeds.monolitica.proyect.services.RolService;
-import com.eeds.monolitica.proyect.web.exception.RolNotFoundException;
+import com.eeds.monolitica.proyect.web.exception.CustomNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,10 +26,10 @@ public class RolServiceImpl implements RolService {
     }
 
     @Override
-    public Optional<Rol> getRolById(Integer rolId) throws RolNotFoundException {
+    public Optional<Rol> getRolById(Integer rolId) throws CustomNotFoundException {
         Optional<Rol> rolDB = rolRepository.findById(rolId);
         if(!rolDB.isPresent()){
-            throw new RolNotFoundException("El ROL con el ID :"+rolId+" NO EXISTE");
+            throw new CustomNotFoundException("El ROL con el ID :"+rolId+" NO EXISTE");
         }
         return rolRepository.findById(rolId);
     }

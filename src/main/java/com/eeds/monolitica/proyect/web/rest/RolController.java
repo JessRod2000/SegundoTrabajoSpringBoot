@@ -2,7 +2,7 @@ package com.eeds.monolitica.proyect.web.rest;
 
 import com.eeds.monolitica.proyect.domain.entities.Rol;
 import com.eeds.monolitica.proyect.services.RolService;
-import com.eeds.monolitica.proyect.web.exception.RolNotFoundException;
+import com.eeds.monolitica.proyect.web.exception.CustomNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class RolController {
         return ResponseEntity.ok().body(rolService.listRoles());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Rol> getRolById(@PathVariable final Integer id) throws RolNotFoundException{
+    public ResponseEntity<Rol> getRolById(@PathVariable final Integer id) throws CustomNotFoundException {
         return ResponseEntity.ok()
                 .body(rolService.getRolById(id).get());
     }

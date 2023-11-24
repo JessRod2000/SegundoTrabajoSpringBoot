@@ -12,7 +12,7 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rol_sequence")
     private Integer id;
 
-    @Size(min = 3, max = 100)
+    @Size(max = 100)
     @NotBlank(message = "Por favor addicionar el nombre de rol")
     private String name;
 
