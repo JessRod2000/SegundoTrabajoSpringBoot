@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -34,7 +32,7 @@ public class UserController {
         }
     }
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getRolById(@PathVariable final Long userId) throws CustomNotFoundException {
+    public ResponseEntity<?> getRolById(@PathVariable final Long userId) throws CustomNotFoundException {
         return ResponseEntity.ok()
                 .body(userService.getUserById(userId).get());
     }
@@ -44,9 +42,9 @@ public class UserController {
         return ResponseEntity.created(new URI("/v1/users/"+userDB.getId())).body(userDB);
     }
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> delete(@PathVariable final Long userId){
+    public ResponseEntity<Void> logicalDelete(@PathVariable final Long userId){
         userService.delete(userId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
     @PutMapping("/{userId}")
     public ResponseEntity<UserDTO> editUser(@RequestBody final UserNewDTO userDto,

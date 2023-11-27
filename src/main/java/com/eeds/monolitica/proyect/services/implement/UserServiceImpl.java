@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public List<UserDTO> listAllUsers() {
-        return userRepository.findAll()
+        return userRepository.findAllByActiveOrderByUserNameAsc(Boolean.TRUE)
                 .stream()
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public List<UserDetailDTO> listAllUsersDetailed() {
-        return userRepository.findAll()
+        return userRepository.findAllByActiveOrderByUserNameAsc(Boolean.TRUE)
                 .stream()
                 .map(userMapper::toDtoDetailed).collect(Collectors.toList());
     }
@@ -60,7 +60,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long userid) {
-        userRepository.deleteById(userid);
+        //userRepository.deleteById(userid);
+        User user = userRepository.findById(userid)
+                .orElseThrow(() -> new IllegalArgumentException("User with id: " + userid + " is not existed."));
+        user.setActive(Boolean.FALSE);
+        userRepository.save(user);
     }
 
     @Override
@@ -77,13 +81,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getUserById(Long userId) throws CustomNotFoundException {
+    public Optional<UserDetailDTO> getUserById(Long userId) throws CustomNotFoundException {
         Optional<User> userDB = userRepository.findById(userId);
         if(!userDB.isPresent()){
             throw new CustomNotFoundException("El USER con el ID :"+userId+" NO EXISTE");
         }
 
-        return userRepository.findById(userId).map(userMapper::toDto);
+        return userRepository.findById(userId).map(userMapper::toDtoDetailed);
     }
 
 }

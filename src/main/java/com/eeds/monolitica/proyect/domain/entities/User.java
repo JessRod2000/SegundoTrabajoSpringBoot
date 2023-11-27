@@ -17,24 +17,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
     @Column(name = "user_name")
-    @Size(min = 3, max = 100)
-    @NotBlank(message = "El campo userName no puede estar vacio")
+    //@Size(min = 3, max = 100)
+    //@NotBlank(message = "El campo userName no puede estar vacio")
     private String userName;
     //@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", message = "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número.")
-    @NotBlank(message = "El campo password no puede estar vacio")
+    //@NotBlank(message = "El campo password no puede estar vacio")
     private String password;
-    @Email(message = "El correo electronico tiene un formato invalido")
+    //@Email(message = "El correo electronico tiene un formato invalido")
     private String email;
+    private Boolean active;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserDetail userDetail;
 
-    public User(String userName, String password, String email, LocalDateTime createdAt) {
+    public User(String userName, String password, String email, LocalDateTime createdAt, Boolean active) {
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.createdAt = createdAt;
+        this.active = active;
     }
 
     public User() {
@@ -70,6 +72,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public LocalDateTime getCreatedAt() {
