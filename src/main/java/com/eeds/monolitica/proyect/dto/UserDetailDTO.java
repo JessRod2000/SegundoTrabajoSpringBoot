@@ -16,8 +16,10 @@ public class UserDetailDTO {
     private Long id;
     private String userName;
     private String email;
+    private String password;
     private LocalDateTime createdAt;
 
+    private Long userDetailId;
     private String firstName;
     private String lastName;
     private Integer age;

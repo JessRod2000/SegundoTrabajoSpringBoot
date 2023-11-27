@@ -15,6 +15,6 @@ public interface UserService {
     List<UserDetailDTO> listAllUsersDetailed();
     UserDTO save(UserNewDTO userDTO);
     void delete(Long userid);
-    UserDTO updateUser(Long id, UserNewDTO userDTO);
+    UserDetailDTO updateUser(Long id, UserDetailDTO userDTO);
     Optional<UserDetailDTO> getUserById(Long userId) throws CustomNotFoundException;
 }

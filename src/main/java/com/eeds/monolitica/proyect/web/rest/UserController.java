@@ -1,6 +1,7 @@
 package com.eeds.monolitica.proyect.web.rest;
 
 import com.eeds.monolitica.proyect.dto.UserDTO;
+import com.eeds.monolitica.proyect.dto.UserDetailDTO;
 import com.eeds.monolitica.proyect.dto.UserNewDTO;
 import com.eeds.monolitica.proyect.services.UserService;
 import com.eeds.monolitica.proyect.web.exception.CustomNotFoundException;
@@ -47,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> editUser(@RequestBody final UserNewDTO userDto,
+    public ResponseEntity<UserDetailDTO> editUser(@RequestBody final UserDetailDTO userDto,
                                             @PathVariable final Long userId) throws CustomNotFoundException{
         if (userDto.getId() == null) {
             throw new IllegalArgumentException("Invalid course id, null value");

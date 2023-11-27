@@ -68,16 +68,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(Long id, UserNewDTO userDTO) {
+    public UserDetailDTO updateUser(Long id, UserDetailDTO userDTO) {
         User userDB = userRepository.findById(id).orElseThrow(()->new NoSuchElementException("No se encontró el rol con ID: " + id));
         userDB.setUserName(userDTO.getUserName());
         userDB.setPassword(userDTO.getPassword());
         userDB.setEmail(userDTO.getEmail());
         userRepository.save(userDB);
-        if (userDTO.getUserDetail()!=null) {
-            userDetailRepository.save(new UserDetail(userDTO.getUserDetail().getFirstName(),userDTO.getUserDetail().getLastName(),userDTO.getUserDetail().getAge(),userDTO.getUserDetail().getBirthDay(),userDB));
+        if (userDTO.getUserDetailId()!=null) {
+            UserDetail userDetail= userDetailRepository.findById(userDTO.getUserDetailId()).orElseThrow(()->new NoSuchElementException("No se encontro el detailed"));
+            //userDetail.setId(userDTO.getId());
+            userDetail.setFirstName(userDTO.getFirstName());
+            userDetail.setLastName(userDTO.getLastName());
+            userDetail.setAge(userDTO.getAge());
+            userDetail.setBirthDay(userDTO.getBirthDay());
+            userDetail.setUser(userDB);
+            userDetailRepository.save(userDetail);
+            //userDetailRepository.save(new UserDetail(userDTO.getUserDetail().getFirstName(),userDTO.getUserDetail().getLastName(),userDTO.getUserDetail().getAge(),userDTO.getUserDetail().getBirthDay(),userDB));
         }
-        return userMapper.toDto(userDB);
+        return userMapper.toDtoDetailed(userDB);
     }
 
     @Override
@@ -86,8 +94,7 @@ public class UserServiceImpl implements UserService {
         if(!userDB.isPresent()){
             throw new CustomNotFoundException("El USER con el ID :"+userId+" NO EXISTE");
         }
-
-        return userRepository.findById(userId).map(userMapper::toDtoDetailed);
+        return userDB.map(userMapper::toDtoDetailed);
     }
 
 }

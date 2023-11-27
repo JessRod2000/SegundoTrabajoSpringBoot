@@ -49,14 +49,30 @@ public class UserMapper implements CustomMapper<UserDTO, User>{
         userDTO.setId(user.getId());
         userDTO.setUserName(user.getUserName());
         userDTO.setEmail(user.getEmail());
+        userDTO.setPassword(user.getPassword());
         userDTO.setCreatedAt(user.getCreatedAt());
 
         UserDetail userDetail = user.getUserDetail();
         if (userDetail!=null){
+            userDTO.setUserDetailId(userDetail.getId());
             userDTO.setFirstName(userDetail.getFirstName());
             userDTO.setLastName(userDetail.getLastName());
             userDTO.setAge(userDetail.getAge());
             userDTO.setBirthDay(userDetail.getBirthDay());
+        }
+        return userDTO;
+    }
+    public UserNewDTO toDtoNew(User user){
+        UserNewDTO userDTO=new UserNewDTO();
+        userDTO.setId(user.getId());
+        userDTO.setUserName(user.getUserName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setCreatedAt(user.getCreatedAt());
+
+        UserDetail userDetail = user.getUserDetail();
+        if (userDetail!=null){
+            userDTO.setUserDetail(userDetail);
         }
         return userDTO;
     }
