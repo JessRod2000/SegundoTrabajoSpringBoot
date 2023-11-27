@@ -18,6 +18,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/v1/users")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
     private final UserService userService;
 
@@ -33,7 +34,7 @@ public class UserController {
         }
     }
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getRolById(@PathVariable final Long userId) throws CustomNotFoundException {
+    public ResponseEntity<UserDetailDTO> getRolById(@PathVariable final Long userId) throws CustomNotFoundException {
         return ResponseEntity.ok()
                 .body(userService.getUserById(userId).get());
     }
