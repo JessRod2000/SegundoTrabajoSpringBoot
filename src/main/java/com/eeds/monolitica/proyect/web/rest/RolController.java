@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/roles")
+@RequestMapping("/v2/roles")
 public class RolController {
     private final RolService rolService;
 
